@@ -1,19 +1,23 @@
 package com.example.guestsapp.repository
 
-class GuestRepository private constructor() {
+import android.content.Context
+
+class GuestRepository private constructor(context: Context) {
+
+    private val guestDataBase = GuestDataBase(context)
 
     companion object {
         private lateinit var repository: GuestRepository
 
-        fun getInstance(): GuestRepository {
+        fun getInstance(context: Context): GuestRepository {
             if(!Companion::repository.isInitialized) {
-                repository = GuestRepository()
+                repository = GuestRepository(context)
             }
             return repository
         }
     }
 
     fun save() {
-        GuestDataBase(null)
     }
+
 }

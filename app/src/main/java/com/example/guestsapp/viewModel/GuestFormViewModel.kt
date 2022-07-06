@@ -1,9 +1,11 @@
 package com.example.guestsapp.viewModel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.example.guestsapp.repository.GuestRepository
 
-class GuestFormViewModel : ViewModel() {
-    private val repository = GuestRepository.getInstance()
+class GuestFormViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = GuestRepository.getInstance(application)
 
 }
