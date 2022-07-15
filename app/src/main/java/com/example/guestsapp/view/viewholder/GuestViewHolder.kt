@@ -1,5 +1,6 @@
 package com.example.guestsapp.view.viewholder
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guestsapp.Model.GuestModel
 import com.example.guestsapp.databinding.RowGuestBinding
@@ -11,6 +12,11 @@ class GuestViewHolder(private val bind: RowGuestBinding, private val listener: O
 
         bind.textName.setOnClickListener{
             listener.onClick(guest.id)
+        }
+
+        bind.textName.setOnLongClickListener{
+            listener.onDelete(guest.id)
+            true
         }
     }
 }
