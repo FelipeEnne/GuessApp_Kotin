@@ -1,10 +1,10 @@
 package com.example.guestsapp.repository
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import com.example.guestsapp.Contants.DataBaseConstants
+import com.example.guestsapp.Constants.DataBaseConstants
 import com.example.guestsapp.Model.GuestModel
-import kotlinx.coroutines.selects.select
 import java.lang.Exception
 
 class GuestRepository private constructor(context: Context) {
@@ -73,6 +73,7 @@ class GuestRepository private constructor(context: Context) {
         }
     }
 
+    @SuppressLint("Range")
     fun getAll(): List<GuestModel> {
         val list = mutableListOf<GuestModel>()
 
@@ -109,6 +110,47 @@ class GuestRepository private constructor(context: Context) {
         return list
     }
 
+
+    @SuppressLint("Range")
+    fun get(id: Int): GuestModel? {
+        var guest: GuestModel? = null
+
+        try {
+            val db = guestDataBase.readableDatabase
+            val columnId = DataBaseConstants.GUEST.COLUMNS.ID
+            val columnName = DataBaseConstants.GUEST.COLUMNS.NAME
+            val columnPresence = DataBaseConstants.GUEST.COLUMNS.PRESENCE
+            val projection = arrayOf(
+                columnId,
+                columnName,
+                columnPresence
+            )
+
+            val selection = DataBaseConstants.GUEST.COLUMNS.ID + " = ?"
+            val args = arrayOf(id.toString())
+
+            val cursor = db.query(
+                DataBaseConstants.GUEST.TABLE_NAME, projection,
+                selection, args, null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val name = cursor.getString(cursor.getColumnIndex(columnName))
+                    val presence = cursor.getInt(cursor.getColumnIndex(columnPresence))
+
+                    guest = GuestModel(id, name, presence == 1)
+                }
+            }
+
+            cursor.close()
+        } catch (e: Exception) {
+            return guest
+        }
+        return guest
+    }
+
+    @SuppressLint("Range")
     fun getPresence(): List<GuestModel> {
         val list = mutableListOf<GuestModel>()
 
@@ -137,6 +179,7 @@ class GuestRepository private constructor(context: Context) {
         return list
     }
 
+    @SuppressLint("Range")
     fun getAbsent(): List<GuestModel> {
         val list = mutableListOf<GuestModel>()
 

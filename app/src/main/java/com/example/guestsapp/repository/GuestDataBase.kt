@@ -3,7 +3,7 @@ package com.example.guestsapp.repository
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.guestsapp.Contants.DataBaseConstants
+import com.example.guestsapp.Constants.DataBaseConstants
 
 class GuestDataBase(context: Context) : SQLiteOpenHelper(context, NAME, null, VERSION) {
 
