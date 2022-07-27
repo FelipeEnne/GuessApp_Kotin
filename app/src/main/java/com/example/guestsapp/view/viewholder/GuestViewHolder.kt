@@ -1,6 +1,7 @@
 package com.example.guestsapp.view.viewholder
 
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guestsapp.Model.GuestModel
 import com.example.guestsapp.databinding.RowGuestBinding
@@ -15,7 +16,14 @@ class GuestViewHolder(private val bind: RowGuestBinding, private val listener: O
         }
 
         bind.textName.setOnLongClickListener{
-            listener.onDelete(guest.id)
+            AlertDialog.Builder(itemView.context)
+                .setTitle("Remove guest")
+                .setMessage("Do you want to remove?")
+                .setPositiveButton("Yes"){dialog, which -> listener.onDelete(guest.id)}
+                .setNegativeButton("No", null)
+                .create()
+                .show()
+
             true
         }
     }
