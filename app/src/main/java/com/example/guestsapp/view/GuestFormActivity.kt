@@ -3,6 +3,7 @@ package com.example.guestsapp.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.guestsapp.Constants.DataBaseConstants
@@ -57,6 +58,13 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
                 binding.radioAbsent.isChecked = true
             }
         })
+
+        viewModel.saveGuest.observe(this) {
+            if (it != "") {
+                Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 
     private fun loadData() {

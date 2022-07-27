@@ -39,8 +39,8 @@ class GuestRepository private constructor(context: Context) {
         }
     }
 
-    fun update(guest: GuestModel) {
-        try {
+    fun update(guest: GuestModel): Boolean {
+        return try {
             val db = guestDataBase.writableDatabase
             val values = ContentValues()
 
